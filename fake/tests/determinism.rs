@@ -340,6 +340,26 @@ mod phone_number {
 }
 
 // ============================================================================
+// Commerce
+// ============================================================================
+
+mod commerce {
+    use super::*;
+    use fake::faker::commerce::raw::*;
+
+    for_all_locales!(gen_l10d_string_test!(CommerceColor,));
+    for_all_locales!(gen_l10d_string_test!(CommerceDepartment,));
+    for_all_locales!(gen_l10d_string_test!(CommerceProductMaterial,));
+    for_all_locales!(gen_l10d_string_test!(CommerceProductAdjective,));
+    for_all_locales!(gen_l10d_string_test!(CommerceProductType,));
+    for_all_locales!(gen_l10d_string_test!(CommerceProduct,));
+    for_all_locales!(gen_l10d_string_test_with_arg!(CommerceProductPrice, 0.0..1000.0,));
+    for_all_locales!(gen_l10d_string_test!(CommercePromotionCode,));
+    for_all_locales!(gen_l10d_string_test!(CommerceProductDescription,));
+    for_all_locales!(gen_l10d_string_test!(CommerceUPC,));
+}
+
+// ============================================================================
 // Feature-gated tests
 // ============================================================================
 

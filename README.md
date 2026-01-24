@@ -163,7 +163,17 @@ Commands:
   Date                  
   DateTime              
   RfcStatusCode         
-  ValidStatusCode       
+  ValidStatusCode 
+  CommerceColor
+  CommerceDepartment
+  CommerceProductAdjective
+  CommerceProductMaterial
+  CommerceProductType
+  CommerceProduct
+  CommerceProductPrice
+  CommercePromotionCode 
+  CommerceProductDescription     
+  CommerceUPC
   help                  Print this message or the help of the given subcommand(s)
 
 Options:
@@ -374,6 +384,21 @@ BsNoun();
 Bs();
 Profession();
 Industry();
+```
+
+## Commerce
+
+```rust
+CommerceColor();
+CommerceDepartment();
+CommerceProductAdjective();
+CommerceProductMaterial();
+CommerceProductType();
+CommerceProduct();
+CommerceProductPrice(range: Range<f64>);
+CommercePromotionCode();
+CommerceProductDescription();
+CommerceUPC();
 ```
 
 ## Currency

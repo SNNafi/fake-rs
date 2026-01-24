@@ -273,3 +273,18 @@ pub mod automotive {
         LicencePlate();
     }
 }
+
+pub mod commerce {
+    def_fakers! {
+        CommerceColor();
+        CommerceDepartment();
+        CommerceProductMaterial();
+        CommerceProductAdjective();
+        CommerceProductType();
+        CommerceProduct();
+        CommerceProductPrice(range: std::ops::Range<f64>);
+        CommercePromotionCode();
+        CommerceProductDescription();
+        CommerceUPC();
+    }
+}
