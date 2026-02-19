@@ -299,3 +299,6 @@ pub use self::nl_nl::NL_NL;
 
 mod tr_tr;
 pub use self::tr_tr::TR_TR;
+
+mod bn_bd;
+pub use self::bn_bd::BN_BD;

@@ -14,6 +14,48 @@ fn numerify_sym<R: Rng + ?Sized>(string: &str, rng: &mut R) -> String {
         .collect()
 }
 
+/// Like `numerify_sym` but uses locale-specific digit strings (e.g. Bengali ০-৯).
+/// `digits` must have at least 10 elements: index 0 = "0", 1 = "1", ..., 9 = "9".
+#[inline]
+pub(crate) fn numerify_sym_with_digits<R: Rng + ?Sized>(
+    string: &str,
+    rng: &mut R,
+    digits: &[&'static str],
+) -> String {
+    assert!(
+        digits.len() >= 10,
+        "NUMBER_DIGIT must have at least 10 elements (0-9)"
+    );
+    let mut out = String::new();
+    for c in string.chars() {
+        match c {
+            '^' => out.push_str(digits[(1..10).fake_with_rng::<usize, _>(rng)]),
+            '#' => out.push_str(digits[(0..10).fake_with_rng::<usize, _>(rng)]),
+            other => out.push(other),
+        }
+    }
+    out
+}
+
+/// Replaces ASCII digits '0'–'9' in `string` with the corresponding locale digit strings.
+/// Use after numerify_sym_with_digits when the format contains literal digits (e.g. "+880").
+#[inline]
+pub(crate) fn replace_ascii_digits_with_locale(string: &str, digits: &[&'static str]) -> String {
+    if digits.len() < 10 {
+        return string.to_string();
+    }
+    let mut out = String::new();
+    for c in string.chars() {
+        if c.is_ascii_digit() {
+            let idx = (c as u32 - b'0' as u32) as usize;
+            out.push_str(digits[idx]);
+        } else {
+            out.push(c);
+        }
+    }
+    out
+}
+
 macro_rules! def_fakers {
     (@m $locale_m:ident=>$locale_s:ident { $($name:ident$(< $($lts:lifetime),* >)?($($arg:ident : $typ:ty),*);)+}) => {
         pub mod $locale_m {
@@ -48,6 +90,7 @@ macro_rules! def_fakers {
         def_fakers!(@m cy_gb=>CY_GB {$($name$(< $($lts),* >)?($($arg:$typ),*);)+});
         def_fakers!(@m nl_nl=>NL_NL {$($name$(< $($lts),* >)?($($arg:$typ),*);)+});
         def_fakers!(@m tr_tr=>TR_TR {$($name$(< $($lts),* >)?($($arg:$typ),*);)+});
+        def_fakers!(@m bn_bd=>BN_BD {$($name$(< $($lts),* >)?($($arg:$typ),*);)+});
 
     };
 }

@@ -1,5 +1,5 @@
 use crate::faker::commerce::raw::*;
-use crate::faker::numerify_sym;
+use crate::faker::numerify_sym_with_digits;
 use crate::locales::Data;
 use crate::Dummy;
 use rand::seq::IndexedRandom;
@@ -73,8 +73,8 @@ impl<L: Data> Dummy<CommercePromotionCode<L>> for String {
         let fmt = *L::COMMERCE_PROMOTION_CODE.choose(rng).unwrap();
         let prefix = *L::COMMERCE_PROMOTION_CODE_PREFIX.choose(rng).unwrap();
         let suffix = *L::COMMERCE_PROMOTION_CODE_SUFFIX.choose(rng).unwrap();
-        let prefix = numerify_sym(prefix, rng);
-        let suffix = numerify_sym(suffix, rng);
+        let prefix = numerify_sym_with_digits(prefix, rng, L::NUMBER_DIGIT);
+        let suffix = numerify_sym_with_digits(suffix, rng, L::NUMBER_DIGIT);
         fmt.replace("{Prefix}", &prefix)
             .replace("{Suffix}", &suffix)
     }

@@ -1,5 +1,5 @@
 use crate::faker::number::raw::*;
-use crate::faker::numerify_sym;
+use crate::faker::numerify_sym_with_digits;
 use crate::locales::Data;
 use crate::Dummy;
 use rand::seq::IndexedRandom;
@@ -20,6 +20,6 @@ impl<L: Data> Dummy<Digit<L>> for &str {
 
 impl<L: Data> Dummy<NumberWithFormat<'_, L>> for String {
     fn dummy_with_rng<R: Rng + ?Sized>(c: &NumberWithFormat<L>, rng: &mut R) -> Self {
-        numerify_sym(c.1, rng)
+        numerify_sym_with_digits(c.1, rng, L::NUMBER_DIGIT)
     }
 }

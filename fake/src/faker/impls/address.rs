@@ -224,7 +224,7 @@ impl<L: Data + Copy> Dummy<PostCode<L>> for String {
 impl<L: Data + Copy> Dummy<BuildingNumber<L>> for String {
     fn dummy_with_rng<R: Rng + ?Sized>(_: &BuildingNumber<L>, rng: &mut R) -> Self {
         let fmt = L::ADDRESS_BUILDING_NUMBER_FORMATS.choose(rng).unwrap();
-        numerify_sym(fmt, rng)
+        crate::faker::numerify_sym_with_digits(fmt, rng, L::NUMBER_DIGIT)
     }
 }
 
